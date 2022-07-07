@@ -1,0 +1,88 @@
+<div *ngIf="userRol==='admin'; else noAdmin">
+    <div class="container w-100 body-form bg-white mt-4 mb-4  rounded-3 shadow">
+  
+      <br/>
+      <h2>Usuarios Registrados: cambiar Permisos</h2>
+      <br/>    
+      <br/>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr class="text-center">
+          <th>Nombre </th>
+          <th>Correo </th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+      <tr *ngFor="let user of users">
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td style="width: 20%;" >
+        <select class="form-control mx-1" style="border: 1px solid;" [(ngModel)]="user.roles.rol"  name="roles" (ngModelChange)="onPreUpdateUser(user)">
+          <option type="submit" value='admin'>Con permisos de administrador</option>
+          <option  type="submit" value='usuario'>Sin permisos de administrador</option>
+          <option  type="submit" value='inhabilita'>inhabilitar cuenta</option>
+        </select>
+        <br>
+        <button type="button" class="btn btn-outline-dark" style="width: 100%;" (click)="resetPass(user)">Cambiar Contraseña</button>
+      </td>
+
+      </tr>
+      </tbody>
+      </table>
+    </div>
+  
+  
+  </div>
+  
+  <ng-template #noAdmin>
+    <!-- <div class="w-100 body-form bg-white mt-4 mb-4  rounded-3 shadow">
+      <br/>
+      <h2>Lista de Empleados</h2>
+      <br/>
+      <div class="mb-3 row">
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="filterPost" placeholder="Search..." [(ngModel)]="filterPost" style="width:30%; margin-left:50px">
+        </div>
+      </div>
+  
+      <br/>
+      <br/>
+    <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre </th>
+        <th>Contacto</th>
+        <th>Fecha_Nacimiento</th>
+        <th>Proyecto_asignado</th>
+        <th>Fecha_incorporación</th>
+        <th>Fecha_baja</th>
+        <th>Responsable_directo</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of  collection.data | filter:filterPost">
+    <td>{{item.id}}</td>
+    <td>{{item.nombre}}</td>
+    <td>{{item.contacto}}</td>
+    <td>{{item.fecha_nacimiento}}</td>
+    <td >{{item.proyecto_asignado}}</td>
+    <td>{{item.fecha_incorporacion}}</td>
+    <td>{{item.fecha_baja}}</td>
+    <td>{{item.responsable_directo}}</td>
+    
+    </tr>
+    </tbody>
+    </table>
+    
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    
+    
+    </div> -->
+  </ng-template>
+  
+  
+  
+  

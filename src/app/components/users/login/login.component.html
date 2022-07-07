@@ -1,0 +1,55 @@
+<div class="container w-75 body-form bg-white mt-4 mb-4 rounded-3 shadow">
+    <div class="row">
+        <div class="col bg d-none d-lg-block col-sm-3 d-col-md-4 d-col-lg-5 col-xl-6 "> <!-- d-xl-block -->
+            
+        </div>
+        <div class="separador"></div>
+        <div class="col m-4 rounded-end">
+            <div class="text-end">
+                <img src='../assets/img/sit (3).png' width="80" alt="">
+            </div>
+            <h2 class="fw-bold text-center  pt-3">Bienvenido</h2>
+            <!-- login -->
+            <form  (ngSubmit)="onLogin()">
+                <div class="mb-4">
+                    <label for="email" class="form-label">Correo electronico</label>
+                    <input  type="email" id="email" name="email" class="form-control" required email  [(ngModel)]="email" #emailLocal="ngModel">
+                    <div  class="alert alert-danger" *ngIf="emailLocal.invalid && (emailLocal.dirty || emailLocal.touched)">
+                        <div class="container-error-message" *ngIf="emailLocal.errors?.['required']">
+                            El email es requerido
+                        </div>
+                        <div class="container-error-message" *ngIf="emailLocal.errors?.['email']">
+                            Email invalido
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input  type="password" id="password" name="password" class="form-control" required minlength="8"  [(ngModel)]="password" #passwordLocal="ngModel">
+                    <div class="alert alert-danger" *ngIf="passwordLocal.invalid && (passwordLocal.dirty || passwordLocal.touched)">
+                        <div class="container-error-message" *ngIf="passwordLocal.errors?.['required']">
+                            La contraseña es requerido
+                        </div>
+                        <div class="container-error-message" *ngIf="passwordLocal.errors?.['minlength']">
+                            La contraseña debe ser de al menos 8 carecteres
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary" [disabled]="(passwordLocal.touched ||emailLocal.touched) &&(passwordLocal.invalid || emailLocal.invalid)">Iniciar Sesion</button>
+                </div>
+                <div class="my-3">
+                    <div *ngIf="isAlert" class="alert alert-danger d-flex align-items-center" role="alert" >
+                        <i class="bi bi-exclamation-triangle-fill me-2" width="24" height="24"></i>
+                      <div>
+                          {{alertMsg}}
+                      </div>
+                      <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close" data-bs-delay="5000" ></button>
+                    </div>
+                    <span>No tienes Cuenta? <a routerLink="/register">Registrate</a></span>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+:host{
+    display: block;
+}
+
+.body-form{
+    border-radius: 10px;
+    position: relative;
+    overflow-y: auto;
+}
+
+
+.bg{
+    background-image: url(../../../../assets/img/sit2.png);
+    background-position: center center;
+    background-size: 100%;
+}
+
+.separador{
+    background-color: #544bff;
+    height: {
+        min-height: 56o;
+        max-height: 655px;
+    }
+    width: 30px;
+}

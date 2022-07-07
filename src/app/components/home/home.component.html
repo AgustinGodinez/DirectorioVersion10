@@ -1,0 +1,45 @@
+<div class="w-100 body-form bg-white mt-4 mb-4  rounded-3 shadow">
+    <br/>
+    <h2>Lista de Empleados</h2>
+    <br/>
+    <br/>
+    <br/>
+  <table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+        <th>Nombre Completo</th>
+        <th>Correo_personal</th>
+        <th>Correo_corporativo</th>
+        <th>Telefono_contacto</th>
+        <th>Fecha_Nacimiento</th>
+        <th>Proyecto_asignado</th>
+        <th>Fecha_incorporación</th>
+        <th>Fecha_baja</th>
+        <th>Responsable_directo</th>  
+        <th>Activo</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of  collection.data | pipeUserFilter:filterUsers">
+    <td>{{item.nombre}}</td>
+    <td>{{item.correoPersonal}}</td>
+    <td>{{item.correoCorporativo}}</td>
+    <td>{{item.telefono}}</td>
+    <td>{{item.fecha_nacimiento}}</td>
+    <td >{{item.proyecto_asignado}}</td>
+    <td>{{item.fecha_incorporacion}}</td>
+    <td>{{item.fecha_baja}}</td>
+    <td>{{item.responsable_directo}}</td>
+    <td>{{item.activo}}</td>
+  
+  </tr>
+  </tbody>
+  </table>
+  
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+  
+  </div>
+  
+  
+  

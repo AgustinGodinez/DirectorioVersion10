@@ -1,0 +1,387 @@
+<div *ngIf="userRol==='admin'; else noAdmin">
+
+    <div  class="w-100 body-form bg-white mt-4 mb-4  rounded-3 shadow">
+       
+    <div>
+      <br/>
+      <h2>Lista de Empleados</h2>
+      <br/>
+      <label style="margin-left:45px; font-size:30px; color:rgb(10, 1, 1)">Busqueda</label>
+      <br/>
+    
+      <div class="mb-3 row">
+        <div class="col-sm-10" style="width:25% ; margin-left: 50px;">
+          <input type="text" class="form-control"  placeholder="Busqueda.." [(ngModel)]="filterAdmin" >
+        </div>
+    
+        
+        
+        <div class="d-grid gap-1 col-2 mx-auto">
+          <button style="margin-left: 20px;" class="btn btn-primary" id="boton" type="button"  (click)="openEmpleado(contentAdd)">Agregar  Empleado</button>
+        </div>
+      
+  
+        <div class="d-grid gap-1 col-2 mx-auto">
+          <button type="button" class="btn btn-outline-dark" (click)="open(content3)">Agregar Proyecto</button>
+          </div>
+          
+        
+      </div>
+      
+      <br/>
+      <br/>
+    <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Nombre Completo</th>
+        <th>Correo_personal</th>
+        <th>Correo_corporativo</th>
+        <th>Telefono_contacto</th>
+        <th>Fecha_Nacimiento</th>
+        <th>Proyecto_asignado</th>
+        <th>Fecha_incorporación</th>
+        <th>Fecha_baja</th>
+        <th>Responsable_directo</th>  
+        <th>Nombre_familiar</th>
+        <th>Telefono_familiar</th>
+        <th>Activo</th>
+        <th>Opciones</th>
+  
+      </tr>
+    </thead>
+    <tbody  >
+    <tr *ngFor="let item of collection.data | pipeAdmin:filterAdmin | paginate:config ">
+      <td>{{item.nombre}}</td>
+      <td>{{item.correoPersonal}}</td>
+      <td>{{item.correoCorporativo}}</td>
+      <td>{{item.telefono}}</td>
+      <td>{{item.fecha_nacimiento}}</td>
+      <td >{{item.proyecto_asignado}}</td>
+      <td>{{item.fecha_incorporacion}}</td>
+      <td>{{item.fecha_baja}}</td>
+      <td>{{item.responsable_directo}}</td>
+      <td>{{item.Nombre_familiar}}</td>
+      <td>{{item.Telefono_familiar}}</td>
+      <td>{{item.activo}}</td>
+      <td class="d-grid gap-2">
+       <button type="button" class="btn btn-outline-dark" (click)="openEditar(content,item)">Editar</button>
+       <button type="button" class="btn btn-outline-dark" (click)="editarStatus(content2,item)">Cambiar Estatus</button>
+      </td>
+  </tr>
+    
+    
+    </tbody>
+    </table>
+    
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    
+    <!--Modal 1-->
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Empleado</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="botonClose()"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+         <form [formGroup]="employeeForm" >
+  
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input type="text" formControlName="nombre" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Correo_personal</label>
+              <input type="email" formControlName="correoPersonal" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Correo_corporativo</label>
+              <input type="email" formControlName="correoCorporativo" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label>Telefono</label>
+              <input type="text" formControlName="telefono" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label>Fecha_Nacimiento</label>
+              <input type="date" formControlName="fecha_nacimiento" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Proyectos: </label>
+              
+              <input type="text" id="proyectos" list="listaProyectos" class="form-control" [(ngModel)]="filterProyectos" formControlName="proyecto_asignado">
+            <datalist id="listaProyectos" *ngIf="filterProyectos">
+              <option *ngFor="let item of collection2.data2 | pipeUser:filterProyectos">{{item.proyecto_asignado2}}</option>
+            </datalist> 
+            </div>
+      
+            <div class="form-group">
+              <label>Fecha_incorporación</label>
+              <input type="date" formControlName="fecha_incorporacion" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Fecha_baja</label>
+              <input type="date" formControlName="fecha_baja" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Responsable Directo </label>
+              <input type="text" id="usuarios" list="listaUsuarios" class="form-control" [(ngModel)]="filterPost" formControlName="responsable_directo">
+            <datalist id="listaUsuarios" *ngIf="filterPost">
+              <option *ngFor="let item of collection.data | filter:filterPost| paginate:config2">{{item.nombre}}</option>
+            </datalist> 
+          </div>
+            
+            <div class="form-group">
+              <label>Activo: </label>
+            <select class="form-select" aria-label="Default select example" style="width: 70%; margin-left:10px" class="form-control" formControlName="activo">
+              <option selected ></option>
+              <option >NO</option>
+              <option >SI</option>
+            </select>
+            </div>
+            <br/>
+            <div class="form-group">
+              <h2>Contacto Familiar</h2>
+            </div>
+            <br/>
+            <div class="form-group">
+              <label>Nombre Familiar</label>
+              <input type="text" formControlName="Nombre_familiar" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Telefono Familiar</label>
+              <input type="text" formControlName="Telefono_familiar" class="form-control">
+            </div>
+            
+          </form>
+    
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarEmpleado()">Guardar</button>
+        <button type="button" class="btn btn-outline-dark" (click)="actualizarEmpleado()">Actualizar</button>
+      </div>
+    </ng-template>
+  
+    <!-- este es el bueno -->
+  
+    <ng-template #contentAdd let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Empleado</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+         <form [formGroup]="employeeForm" >
+  
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input type="text" formControlName="nombre" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Correo_personal</label>
+              <input type="email" formControlName="correoPersonal" class="form-control"  >
+            </div>
+            <div class="form-group">
+              <label>Correo_corporativo</label>
+              <input type="email" formControlName="correoCorporativo" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label>Telefono</label>
+              <input type="text" formControlName="telefono" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label>Fecha_Nacimiento</label>
+              <input type="date" formControlName="fecha_nacimiento" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Proyectos: </label>
+              
+              <input type="text" id="proyectos" list="listaProyectos" class="form-control" [(ngModel)]="filterProyectos" formControlName="proyecto_asignado">
+            <datalist id="listaProyectos" *ngIf="filterProyectos">
+              <option *ngFor="let item of collection2.data2 | pipeUser:filterProyectos">{{item.proyecto_asignado2}}</option>
+            </datalist> 
+            </div>
+      
+            <div class="form-group">
+              <label>Fecha_incorporación</label>
+              <input type="date" formControlName="fecha_incorporacion" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Fecha_baja</label>
+              <input type="date" formControlName="fecha_baja" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Responsable Directo </label>
+              <input type="text" id="usuarios" list="listaUsuarios" class="form-control" [(ngModel)]="filterPost" formControlName="responsable_directo">
+            <datalist id="listaUsuarios" *ngIf="filterPost">
+              <option *ngFor="let item of collection.data | filter:filterPost| paginate:config2">{{item.nombre}}</option>
+            </datalist> 
+          </div>
+            <div class="form-group">
+              <label>Activo: </label>
+            <select class="form-select" aria-label="Default select example" style="width: 70%; margin-left:10px" class="form-control" formControlName="activo">
+              <option selected ></option>
+              <option >NO</option>
+              <option >SI</option>
+            </select>
+            </div>
+            <br/>
+            <div class="form-group">
+              <h2>Contacto Familiar</h2>
+            </div>
+            <br/>
+            <div class="form-group">
+              <label>Nombre Familiar</label>
+              <input type="text" formControlName="Nombre_familiar" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Telefono Familiar</label>
+              <input type="text" formControlName="Telefono_familiar" class="form-control">
+            </div>
+            
+          </form>
+    
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarEmpleado()">Guardar</button>
+      </div>
+    </ng-template>
+  
+    
+    </div>
+  
+  
+    <!--Modal para cambiar status-->
+    <ng-template #content2 let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Cambiar Estatus</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+         <form [formGroup]="employeeStatus" >
+            <div class="form-group">
+              <label>Cambiar Estatus</label>
+            <select class="form-select" aria-label="Default select example" style="width: 70%; margin-left:10px" class="form-control" formControlName="activo">
+              <option selected ></option>
+              <option >NO</option>
+              <option >SI</option>
+            </select>
+            </div>
+            
+          </form>
+    
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="actualizarStatus()">Cambiar</button>
+      </div>
+    </ng-template>
+  
+    <!--Modal para cambiar proyecto asignado-->
+    <ng-template #content3 let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Cliente</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+         <form [formGroup]="proyectForm" >
+          <div class="form-group">
+            <label>Nuevo Cliente</label>
+            <input type="text" formControlName="proyecto_asignado2" class="form-control">
+          </div>
+          </form>
+    
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarProyecto()">Guardar Cliente</button>
+      </div>
+    </ng-template>
+  
+    <ng-template #content4 let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Agregar Responsable_directo</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+         <form [formGroup]="responForm" >
+  
+            <div class="form-group">
+              <label>Responsable_directo</label>
+              <input type="text" formControlName="responsable_directo" class="form-control">
+            </div>
+          </form>
+    
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarResponsable()">Guardar</button>
+      </div>
+    </ng-template>
+    
+    
+    </div>
+  
+  
+  
+  </div>
+  
+  <ng-template #noAdmin>
+    <div class="w-100 body-form bg-white mt-4 mb-4  rounded-3 shadow">
+      <br/>
+      <h2>Lista de Empleados</h2>
+      <br/>
+      <div class="mb-3 row">
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="filterPost" placeholder="Search..." [(ngModel)]="filterPost" style="width:30%; margin-left:50px">
+        </div>
+      </div>
+  
+      <br/>
+      <br/>
+    <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre </th>
+        <th>Contacto</th>
+        <th>Fecha_Nacimiento</th>
+        <th>Proyecto_asignado</th>
+        <th>Fecha_incorporación</th>
+        <th>Fecha_baja</th>
+        <th>Responsable_directo</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of  collection.data | filter:filterPost">
+    <td>{{item.id}}</td>
+    <td>{{item.nombre}}</td>
+    <td>{{item.contacto}}</td>
+    <td>{{item.fecha_nacimiento}}</td>
+    <td >{{item.proyecto_asignado}}</td>
+    <td>{{item.fecha_incorporacion}}</td>
+    <td>{{item.fecha_baja}}</td>
+    <td>{{item.responsable_directo}}</td>
+    
+    </tr>
+    </tbody>
+    </table>
+    
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    
+    
+    </div>
+  </ng-template>
+  
+  
+  
+  

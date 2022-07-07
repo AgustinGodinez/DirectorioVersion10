@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-md navbar-dark fond" >
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-start fond" data-bs-scroll="true" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
+        <div class="offcanvas-body" data-bs-dismiss="offcanvas" >
+          <ul class="navbar-nav justify-content-start flex-grow-1 pe-0" >
+  <!--           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="my-offcanvas" aria-label="Close"></button>
+   -->          <a data-bs-dismiss="offcanvas" aria-label="Close" *ngIf="isLogged" class="nav-link active" routerLink="/home">Inicio</a>
+            <li class="nav-item" *ngIf="isLogged">
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/directorio" *ngIf="userRol==='admin';">Editar directorio</a>
+          </li>
+          <li class="nav-item" *ngIf="isLogged">
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/users" *ngIf="userRol==='admin';">Users</a>
+          </li>
+<!--           <li class="nav-item" *ngIf="isLogged">
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/registerUser" *ngIf="userRol==='admin';">Agregar Usuario</a>
+          </li>
+            <li class="nav-item" *ngIf="isLogged">
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/perfil">perfil</a>
+          </li> -->
+        </ul>
+          <ul class="navbar-nav ms-auto">
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/register" >Registro</a>
+            <a data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" routerLink="/login" *ngIf="!isLogged">Sesion</a>
+            <li class="nav-item" *ngIf="isLogged" >
+              <a href="#" data-bs-dismiss="offcanvas" aria-label="Close" class="nav-link active" (click)="onLogout()">Logout
+              </a>
+            </li>
+          </ul>
+      </div>
+    </div>
+    </div>
+  </nav>
